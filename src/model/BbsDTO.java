@@ -13,6 +13,7 @@ public class BbsDTO {
 	private java.sql.Date postDate;	//작성일
 	private String visitcount;	//조회수
 	
+	private String name;
 	
 
 	//getter&setter
@@ -52,8 +53,11 @@ public class BbsDTO {
 	public void setVisitcount(String visitcount) {
 		this.visitcount = visitcount;
 	}
-	
-	
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

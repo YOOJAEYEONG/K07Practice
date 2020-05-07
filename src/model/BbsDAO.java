@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.ServletContext;
+
 public class BbsDAO {
 	//DAO에서 기본 할일
 	//1.DB연결
@@ -33,6 +35,23 @@ public class BbsDAO {
 		}
 
 	}
+	public BbsDAO(ServletContext ctx) {
+		
+		try {
+			Class.forName(ctx.getInitParameter("JDBCDriver"));
+			String id = "kosmo";
+			String pw = "1234";
+			
+			con = DriverManager.getConnection(
+					ctx.getInitParameter("ConnectionURL"), id, pw);
+			System.out.println("DB연결성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	
 	//DB자원해제
 	public void close() {
@@ -119,6 +138,83 @@ public class BbsDAO {
 		}
 		return bbs;
 	}
+	
+	public void updateVisitCount(String num) {
+		String query = "UPDATE board SET "
+				+ " visitcount = visitcount+1 "
+				+ " WHERE num=? ";
+		System.out.println("조회수증가쿼리:"+query);
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public BbsDTO selectView(String num){
+
+		
+		BbsDTO dto = new BbsDTO();
+		
+		String query = " SELECT B.*, M.name "
+				+ " FROM member M INNER JOIN board B "
+				+ " ON M.id = B.id "
+				+ " WHERE num= ? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto.setNum(rs.getString("num"));
+				dto.setTitle(rs.getString(2));
+				dto.setContent(rs.getString("content"));
+				dto.setId(rs.getString("id"));
+				dto.setPostDate(rs.getDate("postdate"));
+				dto.setVisitcount(rs.getString(6));
+				
+				dto.setName(rs.getString("name"));
+			}
+		} catch (Exception e) {
+			System.out.println("업데이트시 예외발생");
+			e.printStackTrace();
+		}
+		
+		return dto;
+		
+	}
+	
+	
+	
+	public int updateEdit(BbsDTO dto) {
+		int affected = 0;
+		try {
+			String query = " UPDATE board SET content=?, title=? "
+					+ " WHERE num=? ";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getContent());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getNum());
+			
+			affected = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("업데이트시 예외발생"); 
+			e.printStackTrace();
+		}
+		return affected;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 
