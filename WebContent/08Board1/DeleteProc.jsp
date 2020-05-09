@@ -1,3 +1,4 @@
+<%@page import="Util.JavascriptUtil"%>
 <%@page import="model.BbsDAO"%>
 <%@page import="model.BbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

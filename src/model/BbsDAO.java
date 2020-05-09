@@ -210,7 +210,24 @@ public class BbsDAO {
 	
 	
 	
-	
+	public int delete(BbsDTO dto) {
+		int affected = 0;
+		try {
+			String query = "DELETE FROM board WHERE num=? ";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getNum());
+			
+			affected = psmt.executeUpdate();
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("삭제시 예외발생");
+			e.printStackTrace();
+		}
+		return affected;
+	}
 	
 	
 	
