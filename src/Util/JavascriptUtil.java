@@ -26,9 +26,10 @@ public class JavascriptUtil {
 			String str = ""
 					+ "<script>"
 					+ "  alert('"+msg+"');"
-					+ "  location.href='"+url+"');"
+					+ "  location.href='"+url+"';"
 					+ "</script>";
 			out.print(str);
+			
 		} catch (Exception e) {		}
 	}
 	public static void jsAlertBack(

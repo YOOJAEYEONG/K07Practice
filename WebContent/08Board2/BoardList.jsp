@@ -1,3 +1,4 @@
+<%@page import="Util.PagingUtil"%>
 <%@page import="model.BbsDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
@@ -22,12 +23,36 @@ Map<String, Object> param = new HashMap<String, Object>();
 String searchColumn = request.getParameter("searchColumn");
 String searchWord = request.getParameter("searchWord");
 
+String queryStr  = "";
+
+	
 if(searchWord != null ){
 	param.put("Column", searchColumn);
 	param.put("Word", searchWord);
 }
 
 int totalRecordCount = dao.getTotalRecordCount(param);
+
+/***페이지처리 start ***/
+int pageSize =
+	Integer.parseInt(application.getInitParameter("PAGE_SIZE"));//10
+int blockPage =
+	Integer.parseInt(application.getInitParameter("BLOCK_PAGE"));//5
+int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+
+int nowPage = 
+		request.getParameter("nowPage")==null 	||
+		request.getParameter("nowPage").equals("")	? 1 :
+				Integer.parseInt(request.getParameter("nowPage"));
+				
+
+int start = (nowPage-1) * pageSize+1;
+int end = nowPage*pageSize;
+
+param.put("start", start);
+param.put("end", end);
+/**페이지처리 end**/
+
 
 List<BbsDTO> bbs = dao.selectList(param);
 
@@ -113,7 +138,8 @@ dao.close();
 				*/
 				for(BbsDTO dto : bbs){
 					//전체 레코드수를 이용하여 하나씩 차감하면서 가상번호 부여
-					vNum = totalRecordCount--;
+					vNum = totalRecordCount- 
+						(nowPage-1)* pageSize + countNum++;
 			%>	
     
     
@@ -121,8 +147,9 @@ dao.close();
 				<tr>
 					<td class="text-center"><%=vNum %></td>
 					<td class="text-left">
-						<a href="BoardView.jsp?num=<%=dto.getNum() %>">
-						<%=dto.getTitle() %>
+						<a href="BoardView.jsp?num=<%=dto.getNum() %>
+							&nowPage=<%=nowPage%>&<%=queryStr%>">
+							<%=dto.getTitle() %>
 						</a>
 					</td>
 					<td class="text-center"><%=dto.getId() %></td>
@@ -161,17 +188,10 @@ dao.close();
 			<div class="row mt-3">
 				<div class="col">
 					<!-- 페이지번호 부분 -->
-					<ul class="pagination justify-content-center">
-						<li class="page-item"><a href="#" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
-						<li class="page-item"><a href="#" class="page-link"><i class="fas fa-angle-left"></i></a></li>
-						<li class="page-item"><a href="#" class="page-link">1</a></li>		
-						<li class="page-item active"><a href="#" class="page-link">2</a></li>
-						<li class="page-item"><a href="#" class="page-link">3</a></li>
-						<li class="page-item"><a href="#" class="page-link">4</a></li>		
-						<li class="page-item"><a href="#" class="page-link">5</a></li>
-						<li class="page-item"><a href="#" class="page-link"><i class="fas fa-angle-right"></i></a></li>
-						<li class="page-item"><a href="#" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>
-					</ul>
+					<%=PagingUtil.pagingImg(totalRecordCount, pageSize,
+							blockPage, nowPage, "BoardList.jsp?"+queryStr) %>
+					
+					
 				</div>				
 			</div>		
 		</div>
