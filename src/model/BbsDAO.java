@@ -108,15 +108,18 @@ public class BbsDAO {
 			query += " WHERE "+ map.get("Column") +" "
 					+ " LIKE '%"+map.get("Word")+"%' ";
 		}
-		System.out.println("query="+query);
+		System.out.println("getTotalRecordCount="+query);
 		try {
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
 			rs.next();
 			//반환된 결과값(레코드수)을 저장
 			totalCount = rs.getInt(1);
-		} catch (Exception e) {	}
-		
+		} catch (Exception e) {	
+			System.out.println("getTotalRecordCount:예외");
+			e.printStackTrace();
+			
+		}
 		return totalCount;
 	}
 	
@@ -133,7 +136,7 @@ public class BbsDAO {
 		//검색어가 있는경우 조건절 동적추가
 		if(map.get("Word")!=null) {
 			query += " WHERE "+map.get("Column")+" "
-					+" LIKE '%"+map.get("Word")+"%'";
+					+" LIKE '%"+map.get("Word")+"%' ";
 		}
 		//최근 게시물의 항상 위로 노출되어야 하므로 작성된 순서의 역순으로 정렬
 		query += " ORDER BY num DESC ";
@@ -176,7 +179,7 @@ public class BbsDAO {
 				+ "		SELECT * FROM board ";
 		if(map.get("Word")!=null) {
 			query += "	WHERE "+map.get("Column")+ " "
-					+ " LIKE '"+map.get("Word")+"' ";
+					+ " LIKE '%"+map.get("Word")+"%' ";
 		}
 		query += " "
 				+ "		ORDER BY num DESC "
@@ -184,11 +187,14 @@ public class BbsDAO {
 				+ " ) "
 				+ " WHERE rNum BETWEEN ? AND ? ";
 		System.out.println("selectListPage:"+query);
+		
+		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, map.get("start").toString());
 			psmt.setString(2, map.get("end").toString());
 			rs = psmt.executeQuery();
+			
 			while (rs.next()) {
 				BbsDTO dto = new BbsDTO();
 				
@@ -244,14 +250,14 @@ public class BbsDAO {
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
-				dto.setNum(rs.getString("num"));
-				dto.setTitle(rs.getString(2));
-				dto.setContent(rs.getString("content"));
-				dto.setId(rs.getString("id"));
+				dto.setNum(		rs.getString("num"));
+				dto.setTitle(	rs.getString(2));
+				dto.setContent(	rs.getString("content"));
+				dto.setId(		rs.getString("id"));
 				dto.setPostDate(rs.getDate("postdate"));
 				dto.setVisitcount(rs.getString(6));
 				
-				dto.setName(rs.getString("name"));
+				dto.setName(	rs.getString("name"));
 			}
 		} catch (Exception e) {
 			System.out.println("업데이트시 예외발생");

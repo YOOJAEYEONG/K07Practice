@@ -33,7 +33,7 @@ public class PagingUtil {
 				pagingStr += "&nbsp;"+intTemp+"&nbsp;";
 			}else {
 				pagingStr += "&nbsp;"
-						+ "<a href='"+pageName+"nowPage"+intTemp+"'>"
+						+ "<a href='"+pageName+"nowPage="+intTemp+"'>"
 							+intTemp
 						+ "</a>&nbsp;";
 			}

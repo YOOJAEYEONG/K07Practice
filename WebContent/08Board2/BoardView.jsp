@@ -8,14 +8,17 @@
 String queryStr="";
 String searchColumn = request.getParameter("searchColumn");
 String searchWord = request.getParameter("searchWord");
+
+
 if(searchWord!=null){
-	queryStr = "searchColumn="+searchColumn
-			+"&searchWord="+searchWord;
+	System.out.println("searchWord!=null");
+	queryStr = "searchColumn="+searchColumn+"&"
+			+"searchWord="+searchWord+"&";
 }
 String nowPage = request.getParameter("nowPage");
-queryStr += "nowPage="+nowPage+"&";
+queryStr += "&nowPage="+nowPage;
 
-
+System.out.println("BoardBiew>queryStr:"+queryStr);
 
 
 
@@ -95,7 +98,8 @@ dao.close();
 				<!-- 수정, 삭제의 경우 특정 게시물에 대해 수행하는 작업이므로 반드시 게시물의 일련번호(PK)가
 				파라미터로 전달되어야한다.  -->
 					<button type="button" class="btn btn-secondary" 
-						onclick="location.href='BoardEdit.jsp?num=<%=dto.getNum()%>'">
+						onclick="location.href='BoardEdit.jsp?num=
+							<%=dto.getNum()%>'">
 						수정하기</button>
 				<!--회원제게시판에서 삭제처리는 별도의 폼이 필요없이, 사용자에대한 
 				인증처리만 되면 즉시 삭제한다.  -->
@@ -109,8 +113,8 @@ dao.close();
 					<!-- 각종 버튼 부분 -->
 					
 					<button type="button" class="btn btn-warning" 
-						onclick="location.href='BoardList.jsp?
-								<%=queryStr%>';">리스트보기</button>
+						onclick="location.href='./BoardList.jsp?
+						<%=queryStr%>';"> 리스트보기</button>
 				</div>
 			</div>
 			<!--게시물삭제는 로그인된 상태이므로 해당 게시물의 일련번호만

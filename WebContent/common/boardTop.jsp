@@ -23,7 +23,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link text-dark" 
-						href="../08Board1/BoardList.jsp">자유게시판</a>
+						href="../08Board2/BoardList.jsp">자유게시판</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-dark" href="#">자료실</a>

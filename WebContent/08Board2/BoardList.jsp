@@ -20,15 +20,21 @@ BbsDAO dao = new BbsDAO(drv,url);
 
 Map<String, Object> param = new HashMap<String, Object>();
 
+String queryStr  = "";
+
+
+
 String searchColumn = request.getParameter("searchColumn");
 String searchWord = request.getParameter("searchWord");
 
-String queryStr  = "";
 
 	
 if(searchWord != null ){
 	param.put("Column", searchColumn);
 	param.put("Word", searchWord);
+	
+	queryStr = "searchColumn="+searchColumn+"&"
+			+"searchWord="+searchWord+"&";
 }
 
 int totalRecordCount = dao.getTotalRecordCount(param);
@@ -38,6 +44,7 @@ int pageSize =
 	Integer.parseInt(application.getInitParameter("PAGE_SIZE"));//10
 int blockPage =
 	Integer.parseInt(application.getInitParameter("BLOCK_PAGE"));//5
+	
 int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
 
 int nowPage = 
@@ -46,15 +53,15 @@ int nowPage =
 				Integer.parseInt(request.getParameter("nowPage"));
 				
 
-int start = (nowPage-1) * pageSize+1;
-int end = nowPage*pageSize;
+int start = (nowPage-1) * pageSize + 1;
+int end = nowPage*pageSize; 
 
 param.put("start", start);
 param.put("end", end);
 /**페이지처리 end**/
 
 
-List<BbsDTO> bbs = dao.selectList(param);
+List<BbsDTO> bbs = dao.selectListPage(param);
 
 dao.close();
 
