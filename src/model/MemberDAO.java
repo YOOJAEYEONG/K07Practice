@@ -9,215 +9,143 @@ import java.util.Map;
 
 public class MemberDAO {
 	
-	//멤버변수(클래스전체 멤버메소드에 접근가능)
-	Connection con;	// 데이터 베이스와 연결을 위한 객체
+	//멤버변수(클래스 전체 멤버메소드에서 접근 가능)
+	Connection con;
 	PreparedStatement psmt;
-	ResultSet rs;	// SQL & DB 질의에 의해 생성된 테이블을 저장하는 객체입니다.
-	//Statement stmt;	// SQL 문을 데이터베이스에 보내기위한 객체
-	
+	ResultSet rs;
+
 	//기본생성자
 	public MemberDAO() {
-		System.out.println("MemberDAO생성자호출");
+		System.out.println("MemberDAO생성자 호출");		
 	}
-	public MemberDAO(String diver, String url) {
-		
+	public MemberDAO(String driver, String url) {
 		try {
-			//드라이버로드
-			Class.forName(diver);
+			Class.forName(driver);
 			String id = "kosmo";
 			String pw = "1234";
-			
-			con = DriverManager.getConnection(url, id, pw);
-			System.out.println("DB연결 성공");
-		} catch (Exception e) {
+			con = DriverManager.getConnection(url,id,pw);
+			System.out.println("DB연결성공");
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-	//방법1 : 회원의 존재 유무만 판단한다.
+	//방법1 : 회원의 존재유무만 판단한다. 
 	public boolean isMember(String id, String pass) {
-		
-		//COUNT()의 실행결과 결과가 없으면 0을 반환한다. 
-		//COUNT() => 0, 1, ~~~~99의 다중값 반환할 것임
-		String sql = "SELECT COUNT(*) FROM member " +
-				" WHERE id=? AND pass=? ";
+		 
+		String sql = "SELECT COUNT(*) FROM member "
+				+ " WHERE id=? AND pass=?";
 		int isMember = 0;
 		boolean isFlag = false;
-		
+
 		try {
 			//prepare 객체로 쿼리문 전송
 			psmt = con.prepareStatement(sql);
 			//인파라미터 설정
-			psmt.setString(1,id);
-			psmt.setString(2,pass);
-			//쿼리 실행
+			psmt.setString(1, id);
+			psmt.setString(2, pass);
+			//쿼리실행
 			rs = psmt.executeQuery();
-			//실행된 결과를 가져오기위해 next()호출
-			rs.next();/*여기서는 결과유무에 따라 true,false를 반환하고
-				여기서는 count()함수를 썼기 때문에 무조건 0 또는 0이상의 값을 반환하게 된다.
-			*/
+			//실행결과를 가져오기 위해 next() 호출
+			rs.next();
+ 
 			isMember = rs.getInt(1);
-			System.out.println("afftected:"+ isMember);
-			if(isMember==0) {
+			System.out.println("affected:"+isMember);
+			if(isMember==0)
 				isFlag = false;
-			}
-			else {
-				isFlag = true;
-			}
-		} catch (Exception e) {
+			else
+				isFlag = true; 
+		}
+		catch(Exception e) {
 			isFlag = false;
 			e.printStackTrace();
 		}
 		return isFlag;
 	}
 	
-	
-	
-	
-	//방법2 : 회원 인증후 MemberDTO객체로 회원정보를 반환한다.
+	//방법2 : 회원인증후 MemberDTO객체로 회원정보를 반환한다. 
 	public MemberDTO getMemberDTO(String uid, String upass) {
-		//DTO객체를 생성한다.
-		MemberDTO memberDTO = new MemberDTO();
-		
-		String query = "SELECT id, pass, name FROM member " +
-				" WHERE id=? AND pass=? ";
-		
+		//DTO객체를 생성한다. 
+		MemberDTO dto = new MemberDTO();
+		//쿼리문을 작성
+		String query = "SELECT id, pass, name FROM "
+				+ " member WHERE id=? AND pass=?";
 		try {
 			//prepared 객체 생성
 			psmt = con.prepareStatement(query);
-			//쿼리문에 인파라미터 설정
+			//쿼리문의 인파라미터 설정
 			psmt.setString(1, uid);
 			psmt.setString(2, upass);
-			
-			
-			
-			//오라클로 쿼리문 전송 및 실행결과를 ResultSet으로 반환받음;
-			//지금상태에서는 결과유무를 모른다.
+			//오라클로 쿼리문 전송 및 결과셋(ResultSet) 반환받음
 			rs = psmt.executeQuery();
-			
 			//오라클이 반환해준 ResultSet이 있는지 확인
 			if(rs.next()) {
-				// 이 함수에서 객체를 반환하는 이유?
-				//  함수는 하나의 값많을 반황할 수 있기 때문에 회원 레코드의 여러 값을 
-				//  객체로 만들어 반환하는 것이다.
-				
-				memberDTO.setId(rs.getString("id"));
-				memberDTO.setPass(rs.getString("pass"));
-				memberDTO.setName(rs.getString(3));//3번컬럼(오라클인덱스는1부터)
-				//getter사용에서 컬럽 순서지정과 컬럽네임으로 얻어오는 방법에 주시
+				//true를 반환했다면 결과셋 있음
+				//DTO객체에 회원 레코드의 값을 저장한다. 
+				dto.setId(rs.getString("id"));
+				dto.setPass(rs.getString("pass"));
+				dto.setName(rs.getString(3));
 			}
 			else {
-				System.out.println("결과 셋이 없습니다.");
-			}
-		} catch (Exception e) {
-			System.out.println("getMenberDTO오류:");
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		/*
-		내가 작성한 코드
-		String sql = "SELECT id, pass, name, regidate FROM member " +
-				" WHERE id=? AND pass=? ";
-		//String sql = "SELECT * FROM member WHERE id=? AND pass=? ";
-		
-		try {
-			//prepare 객체로 쿼리문 전송
-			psmt = con.prepareStatement(sql);
-			//인파라미터 설정
-			psmt.setString(1,uid);
-			psmt.setString(2,upass);
-			//쿼리 실행
-			rs = psmt.executeQuery();//SQL 질의 결과를 ResultSet에 저장합니다.
-
-			실행된 결과를 가져오기위해 next()호출
-			-결과가 1 개인 경우
-				if(rs.next()) { }
-			-결과가 2개 이상인 경우
-				while(rs.next()) { }
-				
-				rs.next() : 반환된 레코드 한줄으 읽어온다 . 결과값이 여러개일경우 
-				while()을통해 여러줄을 읽어온다.
-			 
-			if(rs.next()) {
-				String id = rs.getString(1);
-				String pass = rs.getString(2);
-				String name = rs.getString(3);
-				java.sql.Date regidate = rs.getDate(4);
-				
-				//memberDTO = new MemberDTO(id,pass,name,regidate);
-				memberDTO.setId(id);
-				memberDTO.setPass(pass);
-				memberDTO.setName(name);
-				memberDTO.setRegidate(regidate);
-			}
-			else {
+				//false를 반환했다면 결과셋 없음
 				System.out.println("결과셋이 없습니다.");
 			}
-		} catch (Exception e) {
+		}
+		catch(Exception e) {
+			System.out.println("getMemberDTO오류");
 			e.printStackTrace();
 		}
-		*/
 		
-		return memberDTO;
+		//DTO객체를 반환한다. 
+		return dto;
 	}
 	
-	
-	//방법3 : 회원 인증후 MemberDTO객체로 회원정보를 반환한다.
-	public Map<String, String> getMemberMap(String id, String pwd) {
-		
+	//회원인증 방법3 : Map계열 컬렉션을 사용
+	public Map<String, String> getMemberMap(String id,
+			String pwd){
+
 		Map<String, String> maps = new HashMap<String, String>();
-		
-		String query = "SELECT id, pass, name FROM member " +
-				" WHERE id=? AND pass=? ";
-		
+
+		String query = "SELECT id, pass, name FROM "
+				+ " member WHERE id=? AND pass=?";
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, pwd);
-	
 			rs = psmt.executeQuery();
-			
+
 			if(rs.next()) {
-				maps.put("id", rs.getString("id"));
+				maps.put("id", rs.getString(1));
 				maps.put("pass", rs.getString("pass"));
-				maps.put("name", rs.getString(3));
+				maps.put("name", rs.getString("name"));
 			}
 			else {
-				System.out.println("결과 맵이 없습니다.");
+				System.out.println("결과셋이 없습니다.");
 			}
-		} catch (Exception e) {
-			System.out.println("getMenberDTO오류:");
+		}
+		catch(Exception e) {
+			System.out.println("getMemberDTO오류");
 			e.printStackTrace();
 		}
+
 		return maps;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

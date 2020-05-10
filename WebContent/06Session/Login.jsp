@@ -4,37 +4,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>Login.jsp</title>
 </head>
 <body>
-<%@include file="../common/CommonLink.jsp" %>
+
+<!-- 공통링크  -->
+<%@ include file="../common/CommonLink.jsp" %>
 
 <h2>로그인 페이지</h2>
-<span style="color: red; font-size: 1.5em">
+
+<span style="color:red; font-size:1.5em;">		
 	<%=request.getAttribute("ERROR_MSG")==null ?
-			"":request.getAttribute("ERROR_MSG")%>
+		"" : request.getAttribute("ERROR_MSG") %>
 </span>
 
-<%if(session.getAttribute("USER_ID")==null) {%>
+<%
+//로그인 전이거나 로그인에 실패했을때 출력되는 내용
+if(session.getAttribute("USER_ID")==null){
+%>
 	<script>
-		function loginValidate(fn) {
-			if(!fn.user_id.value){
-				alert('아이디를 입력하세요');
-				fn.user_id.focus();
-				return false;
-			}
-			if(fn.user_pw.value== null) {
-				alert('패스워드를 입력하세요');
-				fn.user_pw.focus();
-				return false;
-			}	
-			
+	function loginValidate(fn){
+		if(!fn.user_id.value){
+			alert("아이디를 입력하세요");
+			fn.user_id.focus();
+			return false;
 		}
+		if(fn.user_pw.value==""){
+			alert("패스워드를 입력하세요");
+			fn.user_pw.focus();
+			return false;
+		}
+	}
 	</script>
-	<form action="LoginProcess.jsp" method="post" 
-		name="LoginFrm" onsubmit="return loginValidate(this)">
-	
-	
+	<form action="LoginProcess.jsp" method="post" name="loginFrm"
+		onsubmit="return loginValidate(this);">
 	<table border="1">
 		<tr>
 			<td>아이디</td>
@@ -54,15 +57,14 @@
 			</td>			
 		</tr>
 	</table>		
-	
 	</form>
-	<%} else { %>
-		
+<% }else{ %>
+	<!-- 로그인에 성공했을때 출력되는 화면 -->
 	<table border='1'>
 		<tr>
 			<td style="text-align:center;">
-			<!-- 세션영역은 웹브라우저를 최초 연후 닫을때 까지 그 영역이 공유되므로 로그인처리페이지에서
-				저장된 내용을 가져올 수 있다.  -->
+			<!-- 세션영역은 웹브라우저를 최초 연후 닫을때까지 그 영역이 공유되므로
+			로그인처리 페이지에서 저장된 내용을 가져올 수 있다.  -->
 				<%=session.getAttribute("USER_NAME") %> 회원님, 
 					로그인 하셨습니다.
 				<br />
@@ -72,54 +74,6 @@
 			</td>
 		</tr>
 	</table>
-	
-	
-	<%} %>
-
-
-
-
-
-
-
-
-
-
+<% } %>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

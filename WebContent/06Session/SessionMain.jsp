@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,53 +6,51 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SessionMain</title>
+<title>SessionMain.jsp</title>
 </head>
-<body>
-
+<body>	
 	<h2>세션 유지시간 session내장객체로 설정하기</h2>
-	<%session.setMaxInactiveInterval(60*10); %>
-	
+	<%
+		/*
+		web.xml에서 설정할때는 분단위로 설정하고, 만약 설정값이 없을때는
+		30분(1800초)로 설정된다. 웹어플리케이션이 실행될때는 web.xml의
+		설정값이 먼저 실행되고, 아래 JSP코드가 실행되게된다. 
+		*/
+		//내장객체를 사용할때는 초단위로 설정한다. 
+		session.setMaxInactiveInterval(1000);
+	%>
 	
 	<h2>세션 유지시간 확인하기</h2>
-	<%=session.getMaxInactiveInterval()+"<br>" %>
-	
+	<p>
+		<%=session.getMaxInactiveInterval() %>
+	</p>
 	<h2>세션 아이디 확인하기</h2>
-	<%=session.getId()+"<br>" %>
+	<p>
+		<%=session.getId() %>
+	</p>
 	
-	<h2>세션의 생성시간/마지막 요청시간</h2>
+	
+	<h2>세션의 최초/마지막 요청시간</h2>
 	<%
 	long createTime = session.getCreationTime();
-	out.print(createTime+"<br>");
-	
-	SimpleDateFormat sp = new SimpleDateFormat("HH:mm:ss");
-	String creationTime = sp.format(createTime);
-	out.print(creationTime+"<br>");
-	
+	SimpleDateFormat s = new SimpleDateFormat("HH:mm:ss");
+	String creationTimeString = s.format(new Date(createTime));
 	
 	long lastTime = session.getLastAccessedTime();
-	out.print(sp.format(lastTime)+"<br>");
-	
-	
+	String lastTimeString = s.format(new Date(lastTime));
 	%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<ul>
+		<li>최초요청시간 : <%=creationTimeString %></li>
+		<li>마지막요청시간 : <%=lastTimeString %></li>
+	</ul>
+	
+	
+	
+	
+	
+	
+	
+	
 
 </body>
 </html>
