@@ -1,3 +1,6 @@
+<%@page import="model.MemberDTO"%>
+<%@page import="java.util.Vector"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -49,11 +52,28 @@ String[] colors = {"red","green", "blue", "brown"};
 	
 	
 	Map maps = new HashMap();
-	maps.put(1, lists.get)
-	
+	maps.put("a", lists.get(0));
+	maps.put(22, lists.get(1));
+	maps.put("c", lists.get(2));
 	%>
 	
 	
+	<c:set var="maps" value="<%=maps %>" />
+	
+	<h4>키값을 알고있을때 : EL변수, 키값 혹은 EL변수 ["키값"]</h4>
+	
+	
+	아이디 : ${maps['a']['id'] } <br>
+	비번 : ${maps['a']['pass'] } <br>
+	이름 : ${maps.a.name } <br>
+	<br>
+	아이디 : ${maps.['22']['id'] } <br>
+	비번 : ${maps[22]['pass'] } <br>
+	이름 : ${maps[22]['name'] } <br>
+	<br>
+	아이디 : ${maps['c'].id } <br>
+	비번 : ${maps['c'].pass } <br>
+	이름 : ${maps['c'].name } <br>
 	
 	
 	
