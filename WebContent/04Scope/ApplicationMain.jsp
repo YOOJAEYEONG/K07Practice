@@ -72,8 +72,7 @@ request.setAttribute("requestMember", first);
 	-->
 	<h3>포워드로 페이지 전달하기</h3>
 	<%
-		request.getRequestDispatcher("ApplicationResult.jsp")
-			.forward(request, response);
+		request.getRequestDispatcher("ApplicationResult.jsp").forward(request, response);
 	%>
 			
 	<!-- 
