@@ -64,16 +64,16 @@ String[] colors = {"red","green", "blue", "brown"};
 	
 	
 	아이디 : ${maps['a']['id'] } <br>
-	비번 : ${maps['a']['pass'] } <br>
+	비번 : ${maps[Integer(22)]['name'] } <br>
 	이름 : ${maps.a.name } <br>
 	<br>
-	아이디 : ${maps.['22']['id'] } <br>
+	<%-- 아이디 : ${maps.['22']['id'] } <br>
 	비번 : ${maps[22]['pass'] } <br>
 	이름 : ${maps[22]['name'] } <br>
 	<br>
 	아이디 : ${maps['c'].id } <br>
 	비번 : ${maps['c'].pass } <br>
-	이름 : ${maps['c'].name } <br>
+	이름 : ${maps['c'].name } <br> --%>
 	
 	
 	
