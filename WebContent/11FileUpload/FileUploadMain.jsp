@@ -1,7 +1,10 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.multipart.FileRenamePolicy"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -33,8 +36,16 @@
 		<input type="submit" value="upload"/>
 	</form>
 	
-
-
+	<h2>파일업로드2</h2>
+	<h3>파일업로드2-원본파일명 숫자로 변경후 업로드</h3>	
+	<form action="UploadProc2.jsp" method="post" name="fileFrm2"
+		onsubmit="return isValidate(this)"
+		enctype="multipart/form-data">
+	첨부파일1 :
+	<input type="file" name="file" />
+	<input type="submit" value="Upload" />
+		
+	</form>
 
 
 
