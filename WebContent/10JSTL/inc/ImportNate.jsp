@@ -3,5 +3,5 @@
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:import url="http://www.nate.com"/>
 
-<c:import url="http://www.nate.com"></c:import>

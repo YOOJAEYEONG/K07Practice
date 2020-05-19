@@ -4,21 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>02FormAction.jsp</title>
+<title>FormAction</title>
 <script>
-	//폼값 체크함수에서 전송방식과 전송경로를 지정함. 
+
+	//폼값 체크함수에서 전송방식과 전송경로를 지정함
 	var frmCheck = function(){
+		
 		var frm = document.frm;
-		
+
 		if(frm.name.value==""){
-			alert("이름을 입력하세요");
-			frm.name.focus();
+			alert('이름을 입력핫게요');
+			frm.value.focus();
 			return false;
-		}
+		}	
 		
-		frm.action="FormResult.jsp";
-		frm.method = "post";		
+		frm.action = "FormResult.jsp";
+		frm.method = "post";
+		
 	}
+
+
 </script>
 </head>
 <body>
@@ -55,4 +60,5 @@
 	</ul>	
 	</form>
 </body>
+
 </html>

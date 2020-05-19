@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UseBeanForm.jsp</title>
+<title>UseBeanForm</title>
 </head>
 <body>
 	<h2>회원가입화면(속성 일치시)</h2>
@@ -36,4 +36,5 @@
 	</table>	
 	</form>
 </body>
+
 </html>

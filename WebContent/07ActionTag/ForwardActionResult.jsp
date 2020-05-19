@@ -4,17 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ForwardActionResult.jsp</title>
+<title>타이틀</title>
 </head>
 <body>
 	<h2>포워드 & 리다이렉트된 결과 페이지</h2>
 	<ul>
-		<li>
-			페이지영역 확인하기 : 
-			<%=pageContext.getAttribute("pageVar") %>
+		<li>페이지영역 확인하기 :
+			<%=pageContext.getAttribute("pageVar") %>	
 		</li>
-		<li>
-			리퀘스트영역 확인하기 : 
+		<li>리퀘스트영역 확인하기 : 
 			<%=request.getAttribute("requestVar") %>
 		</li>
 	</ul>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RequestResult.jsp</title>
+<title>RequestResult</title>
 </head>
 <body>
 	<h2>이전페이지의 리퀘스트 영역에 저장된 속성읽기</h2>
@@ -31,10 +31,6 @@
 		request.setCharacterEncoding("UTF-8");
 		out.println(request.getParameter("param"));
 	%>
+	
 </body>
 </html>
-
-
-
-
-

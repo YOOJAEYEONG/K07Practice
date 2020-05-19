@@ -1,27 +1,40 @@
 package model;
 
+import java.sql.Date;
+
 public class BbsDTO {
 	/*
-	DTO객체를 만들때 테이블 컬럼의 타입과는 상관없이 대부분의 
-	멤버변수는 String형으로 정의하면 된다. JSP에서 산술연산이
-	꼭 필요한 경우에만 int, double과 같이 숫자형으로 정의한다.  
+	DTO객체를 만들때 테이블 컬럼의 타입과는 상관없이 대부분의 멤버변수는 
+	String형으로 정의하면된다.
+	JSP에서 산술연산이 꼭 필요한 경우에만 int, double과 같이 숫자형으로 정의한다.
 	*/
-	//멤버변수
 	private String num;		//게시판의 일련번호
 	private String title;	//제목
 	private String content;	//내용
-	private String id;		//작성자 아이디(member테이블 참조)
-	private java.sql.Date postDate;//작성일
-	private String visitcount;//조회수	
-	//멤버변수추가 : board와 member테이블의 join을 위해 name컬럼 추가
+	private String id;			//작성자아이디(member테이블참조)
+	private java.sql.Date postDate;	//작성일
+	private String visitcount;	//조회수
+	//멤버변수추가 : board와 member테이블의 join을 위해 name추가
 	private String name;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
+	
+	
+
+	public BbsDTO() {}
+	
+	
+	public BbsDTO(String num, String title, String content, String id, Date postDate, String visitcount, String name) {
+		super();
+		this.num = num;
+		this.title = title;
+		this.content = content;
+		this.id = id;
+		this.postDate = postDate;
+		this.visitcount = visitcount;
 		this.name = name;
 	}
-	//getter/setter
+	
+	
+	
 	public String getNum() {
 		return num;
 	}
@@ -58,5 +71,14 @@ public class BbsDTO {
 	public void setVisitcount(String visitcount) {
 		this.visitcount = visitcount;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
 	
 }

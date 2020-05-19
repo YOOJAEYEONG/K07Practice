@@ -17,7 +17,7 @@
 					<a href="../06Session/Logout.jsp">로그아웃</a>
 				<% } %>
 				&nbsp;&nbsp;&nbsp;
-				<a href="../08Board1/BoardList.jsp">회원제게시판1[PageX]</a>
+				<a href="../08Board2/BoardList.jsp">회원제게시판1[PageX]</a>
 				&nbsp;&nbsp;&nbsp;
 				<a href="../08Board2/BoardList.jsp">회원제게시판2[PageO]</a>
 				&nbsp;&nbsp;&nbsp;

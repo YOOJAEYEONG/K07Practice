@@ -4,22 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login.jsp</title>
+<title>Login</title>
 </head>
+
 <body>
-
 <!-- 공통링크  -->
+<!-- 아래 인클루드는 게시판 만들때도 사용할 것이다.  -->
 <%@ include file="../common/CommonLink.jsp" %>
-
 <h2>로그인 페이지</h2>
-
 <span style="color:red; font-size:1.5em;">		
 	<%=request.getAttribute("ERROR_MSG")==null ?
 		"" : request.getAttribute("ERROR_MSG") %>
 </span>
 
 <%
-//로그인 전이거나 로그인에 실패했을때 출력되는 내용
+//세션영역에 속성이 없을때 (로그인전 또는 실패했을때) 출력되는 내용
 if(session.getAttribute("USER_ID")==null){
 %>
 	<script>
@@ -60,11 +59,12 @@ if(session.getAttribute("USER_ID")==null){
 	</form>
 <% }else{ %>
 	<!-- 로그인에 성공했을때 출력되는 화면 -->
+	
 	<table border='1'>
 		<tr>
 			<td style="text-align:center;">
-			<!-- 세션영역은 웹브라우저를 최초 연후 닫을때까지 그 영역이 공유되므로
-			로그인처리 페이지에서 저장된 내용을 가져올 수 있다.  -->
+			<!-- 세션영역은 웹브라우저를 최초 연후 닫을때 까지 그 영역이 공유되므로 로그인처리페이지에서
+				저장된 내용을 가져올 수 있다.  -->
 				<%=session.getAttribute("USER_NAME") %> 회원님, 
 					로그인 하셨습니다.
 				<br />
@@ -76,4 +76,5 @@ if(session.getAttribute("USER_ID")==null){
 	</table>
 <% } %>
 </body>
+
 </html>
