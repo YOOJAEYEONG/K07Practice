@@ -8,11 +8,15 @@
 </head>
 <body>
 
+
+
+
 <!-- 공통링크  -->
 <%@ include file="../common/CommonLink.jsp" %>
 
 <h2>로그인 페이지</h2>
-
+<%=request.getContextPath() %>
+<%=request.getRequestedSessionId() %>
 <span style="color:red; font-size:1.5em;">		
 	<%=request.getAttribute("ERROR_MSG")==null ?
 		"" : request.getAttribute("ERROR_MSG") %>
