@@ -8,22 +8,10 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> refs/remotes/origin/master
 <!-- 공통링크  -->
 <!-- 아래 인클루드는 게시판 만들때도 사용할 것이다.  -->
 <%@ include file="../common/CommonLink.jsp" %>
 <h2>로그인 페이지</h2>
-<<<<<<< HEAD
-=======
-<%=request.getContextPath() %>
-<%=request.getRequestedSessionId() %>
->>>>>>> refs/remotes/origin/master
 <span style="color:red; font-size:1.5em;">		
 	<%=request.getAttribute("ERROR_MSG")==null ?
 		"" : request.getAttribute("ERROR_MSG") %>
