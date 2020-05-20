@@ -50,7 +50,7 @@ public class WriteCtrl extends HttpServlet{
 		
 		int sucOrFail;
 		 
-		//
+		
 		if(mr != null) {
 			
 			/*
@@ -62,7 +62,8 @@ public class WriteCtrl extends HttpServlet{
 			String title = mr.getParameter("title");
 			String pass = mr.getParameter("pass");
 			String content = mr.getParameter("content");
-			//서버에 저장된 실제파일벙을 가져온다.
+			System.out.println("WriteCtrl>"+content);
+			//서버에 저장된 실제파일명을 가져온다.
 			String attachedfile = mr.getFilesystemName("attachedfile");
 			
 			//DTO객체에 폼값을 저장한다.

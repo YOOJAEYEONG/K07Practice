@@ -84,17 +84,16 @@
 						<th class="text-center"  
 							style="vertical-align:middle;">내용</th>
 						<td>
-							
-							<div id="editor"  class="form-control">
-       <span name="content"> d</span>
-    </div>
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
+							 <textarea rows="30" name="content"  id="summernote" 
+								class="form-control"></textarea>
+							 <script>
+						      $('#summernote').summernote({
+						        placeholder: '내용을 입력하세요.',
+						        tabsize: 2,
+						        height: 200
+						      });
+						    </script>
+	
 						</td>
 					</tr>
 							

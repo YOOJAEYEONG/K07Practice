@@ -96,8 +96,16 @@
 						<th class="text-center"  
 							style="vertical-align:middle;">내용</th>
 						<td>
-							<textarea rows="10" name="content" 
+							
+							<textarea rows="30" name="content"  id="summernote" 
 								class="form-control">${dto.content }</textarea>
+							 <script>
+						      $('#summernote').summernote({
+						        placeholder: '내용을 입력하세요.',
+						        tabsize: 2,
+						        height: 200
+						      });
+						    </script>
 						</td>
 					</tr>
 					<tr>
